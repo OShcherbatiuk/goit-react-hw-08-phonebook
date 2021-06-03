@@ -1,40 +1,37 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 import Container from './components/Container';
-import Section from './components/Section';
-import ContactForm from './components/ContactForm';
-import ContactList from './components/ContactList';
-import Filter from './components/Filter';
-import contactOperations from '../src/redux/phonebook/phonebook-operations';
-import { getIsLoading } from './redux/phonebook/phonebook-selectors';
+import AppBar from './components/AppBar';
+import PhonebookView from './views/PhonebookView';
+import HomeView from './views/HomeView';
+import RegisterView from './views/RegisterView';
+import LoginView from './views/LoginView';
+import { authOperations } from './redux/auth';
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchContact();
+    this.props.onGetCurretnUser();
   }
 
   render() {
     return (
       <Container>
-        <Section title={'Phonebook'}>
-          <ContactForm />
-        </Section>
-        <Section title={'Contacts'}>
-          {this.props.isLoading && <p>Loading...</p>}
-          <Filter />
-          <ContactList />
-        </Section>
+        <AppBar />
+
+        <Switch>
+          <Route exact path="/" component={HomeView} />
+          <Route path="/register" component={RegisterView} />
+          <Route path="/login" component={LoginView} />
+          <Route path="/phonebook" component={PhonebookView} />
+        </Switch>
       </Container>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  isLoading: getIsLoading(state),
-});
+const mapDispatchToProps = {
+  onGetCurretnUser: authOperations.getCurrentUser,
+};
 
-const mapDispatchToProps = dispatch => ({
-  fetchContact: () => dispatch(contactOperations.fetchContact()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
