@@ -1,26 +1,19 @@
 import React from 'react';
-
-const styles = {
-  container: {
-    minHeight: 'calc(100vh - 50px)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontWeight: 500,
-    fontSize: 48,
-    textAlign: 'center',
-  },
-};
+import phoneBook from './phoneBook.jpg';
+import s from './HomeView.module.css';
 
 const HomeView = () => (
-  <div style={styles.container}>
-    <h1 style={styles.title}>
-      Приветственная страница нашего сервиса{' '}
-      <span role="img" aria-label="Иконка приветствия">
-        💁‍♀️
-      </span>
+  <div className={s.section}>
+    <img
+      className={s.image}
+      src={phoneBook}
+      alt="phonebook"
+      width="300"
+      height="300"
+    />
+    <h1 className={s.title}>
+      This is your organizer App,
+      <br /> please login or signup ↗️
     </h1>
   </div>
 );

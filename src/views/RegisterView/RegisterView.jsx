@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { authOperations } from '../../redux/auth';
-
-const styles = {
-  form: {
-    width: 320,
-  },
-  label: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: 15,
-  },
-};
+import s from './RegisterView.module.css';
 
 class RegisterView extends Component {
   state = {
@@ -36,17 +26,16 @@ class RegisterView extends Component {
     const { name, email, password } = this.state;
 
     return (
-      <div>
-        <h1>Страница регистрации</h1>
-
+      <div className={s.section}>
         <form
           onSubmit={this.handleSubmit}
-          style={styles.form}
+          className={s.form}
           autoComplete="off"
         >
-          <label style={styles.label}>
-            Имя
+          <label className={s.title}>
+            Name
             <input
+              className={s.input}
               type="text"
               name="name"
               value={name}
@@ -54,9 +43,10 @@ class RegisterView extends Component {
             />
           </label>
 
-          <label style={styles.label}>
-            Почта
+          <label className={s.title}>
+            Mail
             <input
+              className={s.input}
               type="email"
               name="email"
               value={email}
@@ -64,9 +54,10 @@ class RegisterView extends Component {
             />
           </label>
 
-          <label style={styles.label}>
-            Пароль
+          <label className={s.title}>
+            Password
             <input
+              className={s.input}
               type="password"
               name="password"
               value={password}
@@ -74,7 +65,9 @@ class RegisterView extends Component {
             />
           </label>
 
-          <button type="submit">Зарегистрироваться</button>
+          <button className={s.button} type="submit">
+            Sign up
+          </button>
         </form>
       </div>
     );
