@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import shortid from 'shortid';
 import { connect } from 'react-redux';
 import { phonebookOperations } from '../../redux/phonebook';
+import { getAllContacts } from '../../redux/phonebook/phonebook-selectors';
 
 import s from './ContactForm.module.css';
 
@@ -27,7 +28,14 @@ class ContactForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.onSubmit(this.state);
+    const { name } = this.state;
+    const isNoUnique = this.props.contacts.find(
+      contact => contact.name === name,
+    );
+    isNoUnique
+      ? alert(`${name} is alredy in contacts`)
+      : this.props.onSubmit(this.state);
+
     this.reset();
   };
 
@@ -80,7 +88,11 @@ const mapDispatchToProps = dispatch => ({
   onSubmit: data => dispatch(phonebookOperations.addContact(data)),
 });
 
+const mapStateToProps = state => ({
+  contacts: getAllContacts(state),
+});
+
 ContactForm.propTypes = {
   onSubmit: PropTypes.func,
 };
-export default connect(null, mapDispatchToProps)(ContactForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

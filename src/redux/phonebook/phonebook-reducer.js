@@ -15,18 +15,25 @@ import {
 
 const contacts = createReducer([], {
   [fetchContactSuccess]: (_, { payload }) => payload,
-  [addContactSuccess]: (state, { payload }) => {
-    const isNoUnique = state.find(contact => contact.name === payload.name);
-    if (isNoUnique) {
-      alert(`${payload.name} is alredy in contacts`);
-      return state;
-    } else {
-      return [...state, payload];
-    }
-  },
+  [addContactSuccess]: (state, { payload }) => [...state, payload],
   [deleteContactSuccess]: (state, { payload }) =>
     state.filter(({ id }) => id !== payload),
 });
+
+// const contacts = createReducer([], {
+//   [fetchContactSuccess]: (_, { payload }) => payload,
+//   [addContactSuccess]: (state, { payload }) => {
+//     const isNoUnique = state.find(contact => contact.name === payload.name);
+//     if (isNoUnique) {
+//       alert(`${payload.name} is alredy in contacts`);
+//       return state;
+//     } else {
+//       return [payload, ...state];
+//     }
+//   },
+//   [deleteContactSuccess]: (state, { payload }) =>
+//     state.filter(({ id }) => id !== payload),
+// });
 
 const loading = createReducer(false, {
   [fetchContactRequest]: () => true,
